@@ -32,4 +32,3 @@ export const Admin = {
   premiumCheckout: (email) => API.post("/admin/premium/checkout", { email }),
 };
 
----
