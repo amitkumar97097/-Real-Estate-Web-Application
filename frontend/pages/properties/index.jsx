@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Properties } from "../../utils/api";
 import PropertyCard from "../../components/PropertyCard";
 
@@ -12,6 +12,7 @@ export default function PropertiesPage() {
     beds: "",
   });
 
+  // Fetch properties only when Apply button is clicked
   const fetchProperties = async () => {
     try {
       const { data } = await Properties.list(filters);
@@ -21,20 +22,29 @@ export default function PropertiesPage() {
     }
   };
 
-  useEffect(() => {
-    fetchProperties(); // initial fetch
-  }, []);
+  // Reset filters and show all properties again
+  const resetFilters = async () => {
+    const cleared = { city: "", type: "", min: "", max: "", beds: "" };
+    setFilters(cleared);
+    try {
+      const { data } = await Properties.list(cleared);
+      setItems(data);
+    } catch (error) {
+      console.error("Error resetting filters:", error);
+    }
+  };
 
   return (
     <div className="grid gap-4">
-      {/* Filters */}
-      <div className="grid md:grid-cols-6 gap-2">
+      {/* Filter Section */}
+      <div className="grid md:grid-cols-7 gap-2">
         <input
           className="border p-2 rounded"
           placeholder="City"
           value={filters.city}
           onChange={(e) => setFilters({ ...filters, city: e.target.value })}
         />
+
         <select
           className="border p-2 rounded"
           value={filters.type}
@@ -44,18 +54,21 @@ export default function PropertiesPage() {
           <option value="rent">Rent</option>
           <option value="sale">Sale</option>
         </select>
+
         <input
           className="border p-2 rounded"
           placeholder="Min"
           value={filters.min}
           onChange={(e) => setFilters({ ...filters, min: e.target.value })}
         />
+
         <input
           className="border p-2 rounded"
           placeholder="Max"
           value={filters.max}
           onChange={(e) => setFilters({ ...filters, max: e.target.value })}
         />
+
         <select
           className="border p-2 rounded"
           value={filters.beds}
@@ -67,15 +80,23 @@ export default function PropertiesPage() {
           <option value="3">3+</option>
           <option value="4">4+</option>
         </select>
+
         <button
           onClick={fetchProperties}
           className="px-3 py-2 bg-blue-600 text-white rounded"
         >
           Apply
         </button>
+
+        <button
+          onClick={resetFilters}
+          className="px-3 py-2 bg-gray-400 text-white rounded"
+        >
+          Clear
+        </button>
       </div>
 
-      {/* Results */}
+      {/* Results Section */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {items.length > 0 ? (
           items.map((it) => <PropertyCard key={it._id} item={it} />)
