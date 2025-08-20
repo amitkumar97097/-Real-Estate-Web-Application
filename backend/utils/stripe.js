@@ -10,5 +10,3 @@ export async function createCheckoutSession({ customerEmail }) {
     cancel_url: "http://localhost:3000/premium/cancel",
   });
 }
-
----
