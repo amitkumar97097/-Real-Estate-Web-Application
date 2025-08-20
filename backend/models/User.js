@@ -23,5 +23,3 @@ userSchema.methods.compare = function (pw) {
 };
 
 export default mongoose.model("User", userSchema);
-
----
