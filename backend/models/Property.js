@@ -25,5 +25,3 @@ const propertySchema = new mongoose.Schema(
 );
 
 export default mongoose.model("Property", propertySchema);
-
----
