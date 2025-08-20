@@ -24,5 +24,3 @@ router.post("/premium/checkout", requireAuth, async (req, res) => {
 });
 
 export default router;
-
----
