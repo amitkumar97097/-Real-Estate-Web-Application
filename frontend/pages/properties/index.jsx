@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Properties } from "../../utils/api";
 import PropertyCard from "../../components/PropertyCard";
 
 export default function PropertiesPage() {
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState({
     city: "",
     type: "",
@@ -14,11 +15,14 @@ export default function PropertiesPage() {
 
   // Fetch properties only when Apply button is clicked
   const fetchProperties = async () => {
+    setLoading(true);
     try {
       const { data } = await Properties.list(filters);
       setItems(data);
     } catch (error) {
       console.error("Error fetching properties:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -26,13 +30,21 @@ export default function PropertiesPage() {
   const resetFilters = async () => {
     const cleared = { city: "", type: "", min: "", max: "", beds: "" };
     setFilters(cleared);
+    setLoading(true);
     try {
       const { data } = await Properties.list(cleared);
       setItems(data);
     } catch (error) {
       console.error("Error resetting filters:", error);
+    } finally {
+      setLoading(false);
     }
   };
+
+  // Optional: Load all properties when page loads
+  useEffect(() => {
+    fetchProperties();
+  }, []);
 
   return (
     <div className="grid gap-4">
@@ -56,15 +68,17 @@ export default function PropertiesPage() {
         </select>
 
         <input
+          type="number"
           className="border p-2 rounded"
-          placeholder="Min"
+          placeholder="Min Price"
           value={filters.min}
           onChange={(e) => setFilters({ ...filters, min: e.target.value })}
         />
 
         <input
+          type="number"
           className="border p-2 rounded"
-          placeholder="Max"
+          placeholder="Max Price"
           value={filters.max}
           onChange={(e) => setFilters({ ...filters, max: e.target.value })}
         />
@@ -90,7 +104,7 @@ export default function PropertiesPage() {
 
         <button
           onClick={resetFilters}
-          className="px-3 py-2 bg-gray-400 text-white rounded"
+          className="px-3 py-2 bg-gray-500 text-white rounded"
         >
           Clear
         </button>
@@ -98,10 +112,12 @@ export default function PropertiesPage() {
 
       {/* Results Section */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {items.length > 0 ? (
+        {loading ? (
+          <p className="text-gray-500">Loading...</p>
+        ) : items.length > 0 ? (
           items.map((it) => <PropertyCard key={it._id} item={it} />)
         ) : (
-          <p className="text-sm text-gray-500">No results</p>
+          <p className="text-sm text-gray-500">No results found</p>
         )}
       </div>
     </div>
