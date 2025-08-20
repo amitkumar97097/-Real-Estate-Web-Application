@@ -11,5 +11,3 @@ const messageSchema = new mongoose.Schema(
 );
 
 export default mongoose.model("Message", messageSchema);
-
----
