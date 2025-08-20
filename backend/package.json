@@ -9,7 +9,7 @@
     "start": "node server.js"
   },
   "keywords": ["express", "backend", "real-estate"],
-  "author": "Your Name",
+  "author": "Amit kumar",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
