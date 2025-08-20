@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ================= BASE ================= */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+  a {
+    @apply text-blue-600 hover:text-blue-800 transition-colors;
+  }
+}
+
+/* ================= COMPONENTS ================= */
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-2xl font-medium shadow-sm transition
+           focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply btn bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+  }
+
+  .btn-secondary {
+    @apply btn bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-400;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-md p-4 hover:shadow-lg transition;
+  }
+}
+
+/* ================= UTILITIES ================= */
+@layer utilities {
+  .center {
+    @apply flex items-center justify-center;
+  }
+}
