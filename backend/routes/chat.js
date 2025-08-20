@@ -16,5 +16,3 @@ router.post("/send", requireAuth, async (req, res) => {
 });
 
 export default router;
-
----
