@@ -1,12 +1,16 @@
 {
   "name": "rea-backend",
-  "type": "module",
   "version": "1.0.0",
+  "description": "Real Estate App Backend",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "dev": "node --watch server.js",
     "start": "node server.js"
   },
+  "keywords": ["express", "backend", "real-estate"],
+  "author": "Your Name",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.41.3",
