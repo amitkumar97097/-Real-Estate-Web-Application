@@ -1,7 +1,13 @@
 services:
   - type: web
     name: real-estate-frontend
-    env: node
     rootDir: frontend
-    buildCommand: npm install && npm run build
-    startCommand: npm run preview -- --port $PORT
+    buildCommand: npm run build
+    startCommand: npm start
+    env: node
+  - type: web
+    name: real-estate-backend
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    env: node
